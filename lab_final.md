@@ -319,7 +319,7 @@ int main() {
 
 # **4. TCP Client–Server Program (Uppercase Conversion)**
 
-### **📌 server.c**
+### **📌 server.py**
 
 ```python
 import socket
@@ -352,7 +352,7 @@ conn.close()
 server_socket.close()
 ```
 
-### **📌 client.c**
+### **📌 client.py**
 
 ```python
 import socket
