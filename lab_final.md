@@ -426,4 +426,87 @@ Host ID: 0.0.0.5
 
 ---
 
+# **3. Simple C Program for CRC Generation & Error Detection**
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+// Function to perform XOR except the first bit
+void xor(char *a, char *b) {
+    for (int i = 1; i < strlen(b); i++)
+        a[i] = (a[i] == b[i]) ? '0' : '1';
+}
+
+// CRC Division
+void crc(char data[], char div[], char remainder[]) {
+    int div_len = strlen(div);
+    int data_len = strlen(data);
+
+    char temp[200];
+    strncpy(temp, data, div_len);         // Take first divisor length bits
+    temp[div_len] = '\0';
+
+    for (int i = div_len; i <= data_len; i++) {
+        if (temp[0] == '1')               // If leading bit is 1 → XOR
+            xor(temp, div);
+        else                              // Else XOR with zeros
+            xor(temp, "000000000");
+
+        if (i < data_len) {               // Bring down next bit
+            memmove(temp, temp+1, div_len);
+            temp[div_len-1] = data[i];
+            temp[div_len] = '\0';
+        }
+    }
+    strcpy(remainder, temp);              // CRC remainder
+}
+
+int main() {
+    char data[200], div[] = "100000111", rem[200], recv[200];
+
+    printf("Enter 40 bytes of data in binary (320 bits):\n");
+    scanf("%s", data);
+
+    // Append zeros for division
+    char appended[400];
+    sprintf(appended, "%s%08d", data, 0);   // Append 8 zeros for CRC-8
+
+    crc(appended, div, rem);               // Generate CRC
+    printf("\nCRC: %s\n", rem);
+
+    // Transmitted codeword = data + CRC
+    sprintf(recv, "%s%s", data, rem);
+    printf("Transmitted Codeword: %s\n", recv);
+
+    // Receiver side — check for error
+    char check[200];
+    crc(recv, div, check);
+
+    if (strspn(check, "0") == strlen(check))
+        printf("\nReceiver: No Error Detected.\n");
+    else
+        printf("\nReceiver: ERROR Detected in Data!\n");
+
+    return 0;
+}
+```
+
+---
+
+# ✅ **How This Works (Very Simple)**
+
+1. User inputs **40 bytes (converted to binary = 320 bits)**
+2. Append 8 zeros
+3. Perform CRC division using the polynomial **100000111**
+4. Generate remainder (CRC)
+5. Send: `data + crc`
+6. Receiver divides again
+
+   * All zeros → no error
+   * Non-zero → error detected
+
+---
+
+
 
