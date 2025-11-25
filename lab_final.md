@@ -683,6 +683,134 @@ Receiver divides and checks if remainder = 0.
 
 ---
 
+# **4. SERVER CODE (TCP Server – uppercase conversion)**
+
+Save as: **server.c**
+
+```c
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+
+int main() {
+    int sockfd, newsock;
+    char buffer[100];
+    struct sockaddr_in server, client;
+    socklen_t clen = sizeof(client);
+
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);      // TCP socket
+
+    server.sin_family = AF_INET;
+    server.sin_port = htons(8080);                // Server port
+    server.sin_addr.s_addr = INADDR_ANY;          // Accept from any IP
+
+    bind(sockfd, (struct sockaddr*)&server, sizeof(server)); // Bind IP+port
+    listen(sockfd, 5);                            // Listen for clients
+
+    printf("Server waiting for connection...\n");
+
+    newsock = accept(sockfd, (struct sockaddr*)&client, &clen); // Accept client
+    printf("Client connected!\n");
+
+    recv(newsock, buffer, sizeof(buffer), 0);     // Receive message
+    printf("Received: %s\n", buffer);
+
+    // Convert to uppercase
+    for (int i = 0; buffer[i]; i++)
+        buffer[i] = toupper(buffer[i]);
+
+    send(newsock, buffer, strlen(buffer) + 1, 0); // Send uppercase
+
+    close(newsock);
+    close(sockfd);
+    return 0;
+}
+```
+
+---
+
+# 🖥️ **CLIENT CODE (TCP Client)**
+
+Save as: **client.c**
+
+```c
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+
+int main() {
+    int sockfd;
+    char buffer[100];
+    struct sockaddr_in server;
+
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);   // TCP socket
+
+    server.sin_family = AF_INET;
+    server.sin_port = htons(8080);              // Same port as server
+    server.sin_addr.s_addr = inet_addr("127.0.0.1"); // Server IP (localhost)
+
+    connect(sockfd, (struct sockaddr*)&server, sizeof(server)); // Connect
+
+    printf("Enter message: ");
+    fgets(buffer, sizeof(buffer), stdin);
+
+    send(sockfd, buffer, strlen(buffer) + 1, 0); // Send to server
+    recv(sockfd, buffer, sizeof(buffer), 0);     // Receive uppercase
+
+    printf("From Server: %s\n", buffer);
+
+    close(sockfd);
+    return 0;
+}
+```
+
+---
+
+# ▶️ **How to Run (Linux)**
+
+Open two terminals:
+
+### **Terminal 1: Run Server**
+
+```
+gcc server.c -o server
+./server
+```
+
+### **Terminal 2: Run Client**
+
+```
+gcc client.c -o client
+./client
+```
+
+Send message → get uppercase response.
+
+---
+
+# ✔ Sample Output
+
+**Client:**
+
+```
+Enter message: hello world
+From Server: HELLO WORLD
+```
+
+**Server:**
+
+```
+Server waiting for connection...
+Client connected!
+Received: hello world
+```
+
+---
+
+
 
 
 
