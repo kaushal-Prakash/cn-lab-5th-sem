@@ -1,21 +1,19 @@
 
-
-
 # **1. Detailed Report on Devices in Different Layers of Computer Network Architecture**
 
 ## **🔷 Introduction**
 
 Computer networks are structured based on layered architectures.
-The **OSI (Open Systems Interconnection) model** divides the network functions into **7 layers**, where each layer has specific roles and devices that operate within that layer.
+The **OSI (Open Systems Interconnection) model** divides network functions into **7 layers**, where each layer has specific roles and devices that operate within that layer.
 
-This layered structure helps in:
+This layered approach ensures:
 
 * Standardization
 * Interoperability
 * Troubleshooting
 * Scalability
 
-Below is a layer-by-layer explanation of all devices associated with the OSI architecture.
+Below is a detailed layer-by-layer explanation of all devices in the OSI architecture.
 
 ---
 
@@ -28,340 +26,186 @@ Below is a layer-by-layer explanation of all devices associated with the OSI arc
 ### **📌 Role of Physical Layer**
 
 * Transmits raw bits (0s and 1s)
-* Defines physical media, voltage levels, cables, connectors
-* Deals with the physical aspects of network communication
+* Deals with cables, connectors, signals
+* Defines electrical, optical, mechanical characteristics
 
-### **📡 Devices Operating at Physical Layer**
+### **📡 Devices at Physical Layer**
 
-## **1. Cables**
+#### **1. Cables**
 
-### **a. Twisted Pair Cable (UTP/STP)**
+* **Twisted Pair (UTP/STP)** – Used in Ethernet
+* **Coaxial Cable** – Cable TV, older Ethernet
+* **Optical Fiber** – High-speed data transmission
 
-* Most commonly used in LAN
-* Used in Ethernet cabling
-* UTP (Unshielded) used in homes and offices
-* STP (Shielded) avoids electromagnetic interference
+#### **2. Connectors**
 
-### **b. Coaxial Cable**
+* **RJ-45** – Ethernet
+* **RJ-11** – Telephone lines
 
-* Used in cable TV networks, early Ethernet (10BASE2, 10BASE5)
-* Provides better shielding
+#### **3. Repeaters**
 
-### **c. Optical Fiber**
+* Regenerate and strengthen weak signals
 
-* Uses light signals
-* Very high speed (Gbps to Tbps)
-* Used in backbone networks, ISPs, long-distance communication
+#### **4. Hubs (Multiport Repeaters)**
 
----
+* Broadcasts to all ports
+* No intelligence, no filtering
 
-## **2. Connectors**
+#### **5. NIC (Network Interface Card)**
 
-### **a. RJ-45**
-
-* Used with twisted pair cables for Ethernet
-
-### **b. RJ-11**
-
-* Used in telephone lines, DSL connections
-
----
-
-## **3. Repeaters**
-
-* Regenerate and re-amplify weak signals
-* Extend the distance of communication
-* Used in LAN, WAN, early Wi-Fi extenders
-
----
-
-## **4. Hubs (Multiport Repeaters)**
-
-* Operate purely at layer 1
-* Broadcast received signal to **all** ports
-* No filtering, no intelligence
-* Causes network collisions → rarely used today
-
----
-
-## **5. Network Interface Card (NIC) – Hardware Layer**
-
-* Provides physical access to the network
-* Converts data into electrical/light signals
-* Wireless NICs use antennas
-* Ethernet NICs use RJ-45 ports
+* Converts data → signals
+* Provides physical connectivity
 
 ---
 
 # **2️⃣ Data Link Layer Devices (Layer 2)**
 
-### **📌 Role of Data Link Layer**
+### **📌 Role**
 
-* Error detection/correction
 * MAC addressing
-* Controls access to media (CSMA/CD, CSMA/CA)
+* Error detection
+* Framing
+* Access control (CSMA/CD, CSMA/CA)
 
-### **📡 Devices Operating at Layer 2**
+### **📡 Devices**
 
-## **1. Switches**
+#### **1. Switches**
 
-* Most important Layer 2 device
-* Uses **MAC address table** to forward frames
-* Reduces collision domains (each port = one collision domain)
-* Faster, efficient, widely used in LANs
+* Forwards frames using MAC table
+* Each port = one collision domain
 
----
+#### **2. Bridges**
 
-## **2. Bridges**
+* Connect LAN segments
+* Filter based on MAC
 
-* Used to divide large LANs into smaller segments
-* Operates on MAC addresses
-* Controls traffic between segments
-* Switch = multiport bridge
+#### **3. Access Points (Layer 2 APs)**
 
----
+* Connect wireless devices
 
-## **3. Layer 2 Wireless Access Point (AP)**
+#### **4. Modems (work across Layer 1 & 2)**
 
-* Connects wireless devices to wired network
-* Uses Wi-Fi standards (802.11a/b/g/n/ac/ax)
-* Provides MAC-level filtering and authentication
-
----
-
-## **4. Modems (Partially Layer 2)**
-
-* Convert digital ↔ analog signals
-* Used in DSL, cable internet
-* Technically work across Physical + Data Link
+* Convert digital ↔ analog
 
 ---
 
 # **3️⃣ Network Layer Devices (Layer 3)**
 
-### **📌 Role of Network Layer**
+### **📌 Role**
 
-* Logical addressing (IP addresses)
-* Routing of packets
+* Logical addressing (IP)
+* Routing
 * Best path selection
-* Packet fragmentation
 
-### **📡 Devices Operating at Network Layer**
+### **📡 Devices**
 
-## **1. Routers**
+#### **1. Routers**
 
-* Main Layer 3 device
-* Uses IP addresses to forward packets
-* Connects different networks (LAN ↔ WAN)
-* Maintains routing tables (RIP, OSPF, BGP)
+* Main layer 3 device
+* Forwards packets using IP
 
----
+#### **2. Layer 3 Switch**
 
-## **2. Layer 3 Switch**
+* High-speed routing inside LAN
 
-* High-speed switch performing routing
-* Used in enterprise networks
-* Supports VLAN routing (Inter-VLAN routing)
+#### **3. Gateways**
 
----
+* Connect dissimilar networks
 
-## **3. Gateways (Layer 3 and above)**
+#### **4. Firewalls (Partially Layer 3+)**
 
-* Connect networks with **different architectures/protocols**
-* Example: VoIP gateway, IoT gateways
-* More intelligent than routers
-
----
-
-## **4. Firewalls (Partly Layer 3)**
-
-* Filter traffic using IP rules
-* Block/allow packets
-* Used for network security
-* Many modern firewalls work on layers 3–7
+* Filter based on IP rules
 
 ---
 
 # **4️⃣ Transport Layer Devices (Layer 4)**
 
-### **📌 Role of Transport Layer**
+### **📌 Role**
 
 * End-to-end communication
 * Segmentation
-* Flow control
-* Error control
+* Flow & error control
 * Protocols: **TCP, UDP**
 
-### **📡 Devices Operating at Transport Layer**
+### **📡 Devices**
 
-Transport layer mostly involves software-level devices, but some hardware exists.
+#### **1. Load Balancers**
 
-## **1. Load Balancers**
-
-* Distribute network traffic across multiple servers
+* Distribute traffic
 * Use TCP/UDP port numbers
-* Used in data centers, cloud scaling
 
----
+#### **2. Layer 4 Firewalls**
 
-## **2. Advanced Firewalls (Layer 4)**
+* Block based on port numbers
 
-* Can block traffic based on **TCP/UDP ports**
-* Example: Block port 80 (HTTP) or 443 (HTTPS)
+#### **3. NAT Devices**
 
----
-
-## **3. NAT Devices**
-
-* Translate private ↔ public IPs
-* Work at Layer 3 + Layer 4 (port translation)
-* Found in home routers
+* Translate private ↔ public IP
 
 ---
 
 # **5️⃣ Session Layer Devices (Layer 5)**
 
-### **📌 Role of Session Layer**
+### **📌 Role**
 
-* Manages connections between devices
-* Establish, maintain, terminate sessions
-* Example: Login sessions, remote desktop sessions
+* Establish, manage, terminate sessions
 
-### **📡 Devices/Software at Layer 5**
+### **📡 Devices/Software**
 
-Session layer is mostly software-based:
-
-## **1. Session Border Controllers (SBC)**
-
-* Used in VoIP and SIP networks
-* Manage media + signaling sessions
-* Provide security, NAT traversal, session control
-
----
-
-## **2. Remote Desktop Gateways**
-
-* Manage user sessions in remote access
-* Example: RDP Gateway
-
----
-
-## **3. NetBIOS / RPC Session Managers**
-
-* Allow session establishment between computers in LAN
+* **Session Border Controllers (SBC)**
+* **Remote Desktop Gateways**
+* **NetBIOS / RPC Session Managers**
 
 ---
 
 # **6️⃣ Presentation Layer Devices (Layer 6)**
 
-### **📌 Role of Presentation Layer**
+### **📌 Role**
 
-* Data translation
-* Encryption/decryption
+* Encryption
 * Compression
-* Ensures data is readable on both sides
+* Data translation
 
-### **📡 Devices/Software at Layer 6**
+### **📡 Devices/Software**
 
-Almost fully software-level:
-
-## **1. Encryption Devices**
-
-* SSL accelerators
-* Hardware Security Modules (HSMs)
-* Perform fast data encryption/decryption
-
----
-
-## **2. Data Compression Devices**
-
-* WAN optimization appliances
-* Reduce bandwidth usage by compressing data
-
----
-
-## **3. Codecs (Encoder/Decoder Devices)**
-
-* Used for audio and video streaming
-* Convert analog ↔ digital formats
-* Example: H.264 codec hardware
+* **Hardware Security Modules (HSMs)**
+* **SSL Accelerators**
+* **Codecs (H.264, etc.)**
 
 ---
 
 # **7️⃣ Application Layer Devices (Layer 7)**
 
-### **📌 Role of Application Layer**
+### **📌 Role**
 
-* Interface between users and the network
-* Supports network applications such as email, browsing, file transfer
+* Provides network services to applications
 
-### **📡 Devices Operating at Layer 7**
+### **📡 Devices**
 
-## **1. Application Layer Gateways (ALGs)**
-
-* Understand application protocols (HTTP, FTP, DNS)
-* Provide deep packet inspection (DPI)
-* Used in enterprise firewalls
-
----
-
-## **2. Proxy Servers**
-
-* Operate at application layer
-* Provide caching, filtering, logging
-* Examples:
-
-  * HTTP Proxy
-  * Forward/Reverse Proxy
-  * Content filtering proxy
-
----
-
-## **3. Web Servers**
-
-* Host websites and applications
-* Use HTTP/HTTPS
-* Examples: Apache, NGINX, IIS
-
----
-
-## **4. Mail Servers**
-
-* Handle email communication
-* Protocols: SMTP, POP3, IMAP
-
----
-
-## **5. DNS Servers**
-
-* Resolve domain names to IP addresses
-* Critical for routing and browsing
-
----
-
-## **6. FTP/SFTP Servers**
-
-* File transfer
-* Backup storage
-* Remote file management
+* **Application Layer Gateways (ALGs)**
+* **Proxy Servers**
+* **Web Servers**
+* **Mail Servers**
+* **DNS Servers**
+* **FTP/SFTP Servers**
 
 ---
 
 # **🧾 Summary Table (Layer-wise Devices)**
 
-| **Layer**           | **Devices**                                   |
-| ------------------- | --------------------------------------------- |
-| **1. Physical**     | Cables, Hubs, Repeaters, NIC, Connectors      |
-| **2. Data Link**    | Switches, Bridges, APs, Modems                |
-| **3. Network**      | Routers, L3 Switch, Gateways, Firewalls       |
-| **4. Transport**    | Load Balancers, NAT Devices, L4 Firewalls     |
-| **5. Session**      | SBCs, Session Managers                        |
-| **6. Presentation** | HSMs, SSL accelerators, Codecs                |
-| **7. Application**  | Proxy Servers, DNS, Mail Servers, Web Servers |
+| **Layer**           | **Devices**                               |
+| ------------------- | ----------------------------------------- |
+| **1. Physical**     | Cables, Hubs, Repeaters, NIC, Connectors  |
+| **2. Data Link**    | Switches, Bridges, APs, Modems            |
+| **3. Network**      | Routers, L3 Switches, Gateways, Firewalls |
+| **4. Transport**    | Load Balancers, NAT, L4 Firewalls         |
+| **5. Session**      | SBCs, Session Managers                    |
+| **6. Presentation** | HSMs, SSL Accelerators, Codecs            |
+| **7. Application**  | Proxy, DNS, Web & Mail Servers            |
 
 ---
 
-# **2. C Program: Separate Network & Host ID + Find Class**
+# **2. C Program: Separate Network & Host ID + Determine Class**
 
 ```c
 #include <stdio.h>
@@ -379,29 +223,26 @@ int main() {
 
     printf("\nGiven IP: %s\n", ip);
 
-    // Determine the class using the first octet
     if (a >= 1 && a <= 126) {
         printf("Class: A\n");
         printf("Network ID: %d.0.0.0\n", a);
-        printf("Host ID: 0.%d.%d.%d\n", b, c, d);
+        printf("Host  ID : 0.%d.%d.%d\n", b, c, d);
     }
     else if (a >= 128 && a <= 191) {
         printf("Class: B\n");
         printf("Network ID: %d.%d.0.0\n", a, b);
-        printf("Host ID: 0.0.%d.%d\n", c, d);
+        printf("Host  ID : 0.0.%d.%d\n", c, d);
     }
     else if (a >= 192 && a <= 223) {
         printf("Class: C\n");
         printf("Network ID: %d.%d.%d.0\n", a, b, c);
-        printf("Host ID: 0.0.0.%d\n", d);
+        printf("Host  ID : 0.0.0.%d\n", d);
     }
     else if (a >= 224 && a <= 239) {
         printf("Class: D (Multicast)\n");
-        printf("No Network/Host ID for Class D\n");
     }
     else if (a >= 240 && a <= 255) {
         printf("Class: E (Experimental)\n");
-        printf("No Network/Host ID for Class E\n");
     }
     else {
         printf("Invalid IP Address\n");
@@ -413,80 +254,62 @@ int main() {
 
 ---
 
-# ✅ **Sample Output**
-
-```
-Enter IPv4 address (example: 192.168.1.5): 192.168.1.5
-
-Given IP: 192.168.1.5
-Class: C
-Network ID: 192.168.1.0
-Host ID: 0.0.0.5
-```
-
----
-
-# **3. Simple C Program for CRC Generation & Error Detection**
+# **3. C Program for CRC Generation & Error Detection**
 
 ```c
 #include <stdio.h>
 #include <string.h>
 
-// Function to perform XOR except the first bit
 void xor(char *a, char *b) {
     for (int i = 1; i < strlen(b); i++)
         a[i] = (a[i] == b[i]) ? '0' : '1';
 }
 
-// CRC Division
 void crc(char data[], char div[], char remainder[]) {
     int div_len = strlen(div);
     int data_len = strlen(data);
 
     char temp[200];
-    strncpy(temp, data, div_len);         // Take first divisor length bits
+    strncpy(temp, data, div_len);
     temp[div_len] = '\0';
 
     for (int i = div_len; i <= data_len; i++) {
-        if (temp[0] == '1')               // If leading bit is 1 → XOR
+        if (temp[0] == '1')
             xor(temp, div);
-        else                              // Else XOR with zeros
+        else
             xor(temp, "000000000");
 
-        if (i < data_len) {               // Bring down next bit
+        if (i < data_len) {
             memmove(temp, temp+1, div_len);
             temp[div_len-1] = data[i];
             temp[div_len] = '\0';
         }
     }
-    strcpy(remainder, temp);              // CRC remainder
+    strcpy(remainder, temp);
 }
 
 int main() {
     char data[200], div[] = "100000111", rem[200], recv[200];
 
-    printf("Enter 40 bytes of data in binary (320 bits):\n");
+    printf("Enter 40 bytes of data (320 bits):\n");
     scanf("%s", data);
 
-    // Append zeros for division
     char appended[400];
-    sprintf(appended, "%s%08d", data, 0);   // Append 8 zeros for CRC-8
+    sprintf(appended, "%s%08d", data, 0);
 
-    crc(appended, div, rem);               // Generate CRC
+    crc(appended, div, rem);
     printf("\nCRC: %s\n", rem);
 
-    // Transmitted codeword = data + CRC
     sprintf(recv, "%s%s", data, rem);
     printf("Transmitted Codeword: %s\n", recv);
 
-    // Receiver side — check for error
     char check[200];
     crc(recv, div, check);
 
     if (strspn(check, "0") == strlen(check))
         printf("\nReceiver: No Error Detected.\n");
     else
-        printf("\nReceiver: ERROR Detected in Data!\n");
+        printf("\nReceiver: ERROR Detected!\n");
 
     return 0;
 }
@@ -494,198 +317,9 @@ int main() {
 
 ---
 
-# ✅ **How This Works (Very Simple)**
+# **4. TCP Client–Server Program (Uppercase Conversion)**
 
-1. User inputs **40 bytes (converted to binary = 320 bits)**
-2. Append 8 zeros
-3. Perform CRC division using the polynomial **100000111**
-4. Generate remainder (CRC)
-5. Send: `data + crc`
-6. Receiver divides again
-
-   * All zeros → no error
-   * Non-zero → error detected
-
----
-
-## 🧩 **What Exactly is CRC?**
-
-### **CRC (Cyclic Redundancy Check)** is:
-
-👉 **An error-detection technique** used in digital networks and storage systems.
-👉 It detects accidental changes (noise, bit flips) in the transmitted data.
-👉 It uses **binary division** and polynomial arithmetic to generate a short code called **CRC remainder**.
-
-CRC is **not encryption**, **not compression** —
-It is simply a powerful **error detection mechanism**.
-
----
-
-# 🔍 **Why do we need CRC?**
-
-During data transmission:
-
-* Noise
-* Interference
-* Dropped signals
-* Cable faults
-
-can **flip 1 or more bits**.
-
-CRC helps the receiver check:
-✔ Did the data arrive correctly?
-✔ Did any bit get corrupted?
-
-If corrupted → **receiver detects error**.
-
----
-
-# 🧠 **How CRC Works (Concept)**
-
-CRC treats:
-
-* The **data** as a large binary number
-* The **generator polynomial** as another binary number
-
-Then it performs:
-
-```
-DATA BITS  ÷  GENERATOR POLYNOMIAL  →  REMAINDER (CRC)
-```
-
-This remainder is attached to data and sent to the receiver.
-
----
-
-# 📌 **Sender Side**
-
-1. Take the data bits
-2. Append `n` zeros (where n = degree of generator polynomial)
-3. Perform binary division
-4. Get remainder = **CRC**
-5. Transmit: `Data + CRC`
-
----
-
-# 📌 **Receiver Side**
-
-1. Perform the **same division** on received bits
-2. If remainder = 0 → ✔ Data correct
-3. Else → ❌ Error in transmission
-
----
-
-# 📐 **Important: CRC Uses Polynomial Math**
-
-Example generator polynomial:
-
-```
-x⁸ + x² + x + 1
-```
-
-This becomes binary:
-
-```
-100000111
-```
-
-Each bit = coefficient of polynomial.
-
-CRC performs **polynomial long division** where coefficients are modulo-2.
-
----
-
-# ⚙ **CRC Operations Are Simpler Than Normal Math**
-
-**In CRC:**
-
-| Operation      | Meaning                  |
-| -------------- | ------------------------ |
-| Addition       | XOR                      |
-| Subtraction    | XOR                      |
-| Multiplication | Left shift               |
-| Division       | Polynomial long division |
-
-CRC uses **XOR** because there is **no carry**.
-
-Example:
-
-```
-1 XOR 1 = 0  
-1 XOR 0 = 1  
-0 XOR 0 = 0
-```
-
----
-
-# 📘 **Why XOR Starts from Index 1?**
-
-Because the **leading bit decides the division** (choose divisor or zeros).
-It is not XORed; it's only used to choose the divisor.
-
----
-
-# 🧪 **What Types of Errors Can CRC Detect?**
-
-CRC is very powerful:
-
-✔ Single-bit errors
-✔ Double-bit errors
-✔ Odd number of bit errors
-✔ Burst errors (up to length of generator polynomial)
-
-That’s why CRC is used in:
-
-* Ethernet
-* Wi-Fi
-* USB
-* Modems
-* Storage disks
-* MPEG, PNG, ZIP
-
----
-
-# 🎯 **CRC vs Other Methods**
-
-| Method   | Strength                          |
-| -------- | --------------------------------- |
-| Parity   | Detects single-bit errors only    |
-| Checksum | Weaker, may miss patterns         |
-| **CRC**  | Very strong, detects burst errors |
-
-CRC is the **industry standard** for reliable data transmission.
-
----
-
-# 💡 Example (Very Simple)
-
-Data:
-
-```
-1101
-```
-
-Generator (divisor):
-
-```
-1011
-```
-
-After division, remainder (CRC) might be:
-
-```
-011
-```
-
-Transmitted → `1101 011`
-
-Receiver divides and checks if remainder = 0.
-
----
-
-# **4. SERVER CODE (TCP Server – uppercase conversion)**
-
-Save as: **server.c**
+### **📌 server.c**
 
 ```c
 #include <stdio.h>
@@ -700,28 +334,25 @@ int main() {
     struct sockaddr_in server, client;
     socklen_t clen = sizeof(client);
 
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);      // TCP socket
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
     server.sin_family = AF_INET;
-    server.sin_port = htons(8080);                // Server port
-    server.sin_addr.s_addr = INADDR_ANY;          // Accept from any IP
+    server.sin_port = htons(8080);
+    server.sin_addr.s_addr = INADDR_ANY;
 
-    bind(sockfd, (struct sockaddr*)&server, sizeof(server)); // Bind IP+port
-    listen(sockfd, 5);                            // Listen for clients
+    bind(sockfd, (struct sockaddr*)&server, sizeof(server));
+    listen(sockfd, 5);
 
     printf("Server waiting for connection...\n");
 
-    newsock = accept(sockfd, (struct sockaddr*)&client, &clen); // Accept client
-    printf("Client connected!\n");
+    newsock = accept(sockfd, (struct sockaddr*)&client, &clen);
 
-    recv(newsock, buffer, sizeof(buffer), 0);     // Receive message
-    printf("Received: %s\n", buffer);
+    recv(newsock, buffer, sizeof(buffer), 0);
 
-    // Convert to uppercase
     for (int i = 0; buffer[i]; i++)
         buffer[i] = toupper(buffer[i]);
 
-    send(newsock, buffer, strlen(buffer) + 1, 0); // Send uppercase
+    send(newsock, buffer, strlen(buffer) + 1, 0);
 
     close(newsock);
     close(sockfd);
@@ -729,11 +360,7 @@ int main() {
 }
 ```
 
----
-
-# 🖥️ **CLIENT CODE (TCP Client)**
-
-Save as: **client.c**
+### **📌 client.c**
 
 ```c
 #include <stdio.h>
@@ -746,19 +373,19 @@ int main() {
     char buffer[100];
     struct sockaddr_in server;
 
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);   // TCP socket
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
     server.sin_family = AF_INET;
-    server.sin_port = htons(8080);              // Same port as server
-    server.sin_addr.s_addr = inet_addr("127.0.0.1"); // Server IP (localhost)
+    server.sin_port = htons(8080);
+    server.sin_addr.s_addr = inet_addr("127.0.0.1");
 
-    connect(sockfd, (struct sockaddr*)&server, sizeof(server)); // Connect
+    connect(sockfd, (struct sockaddr*)&server, sizeof(server));
 
     printf("Enter message: ");
     fgets(buffer, sizeof(buffer), stdin);
 
-    send(sockfd, buffer, strlen(buffer) + 1, 0); // Send to server
-    recv(sockfd, buffer, sizeof(buffer), 0);     // Receive uppercase
+    send(sockfd, buffer, strlen(buffer) + 1, 0);
+    recv(sockfd, buffer, sizeof(buffer), 0);
 
     printf("From Server: %s\n", buffer);
 
@@ -769,49 +396,83 @@ int main() {
 
 ---
 
-# ▶️ **How to Run (Linux)**
+# **5. Wireshark: Capture & Filter Packets**
 
-Open two terminals:
+## **a) Capture Ethernet / Wi-Fi Packets**
 
-### **Terminal 1: Run Server**
-
-```
-gcc server.c -o server
-./server
-```
-
-### **Terminal 2: Run Client**
-
-```
-gcc client.c -o client
-./client
-```
-
-Send message → get uppercase response.
+1. Open Wireshark
+2. Select correct interface (**Ethernet / Wi-Fi**)
+3. Click **Start Capture**
+4. Generate traffic (open google.com)
+5. Click **Stop**
 
 ---
 
-# ✔ Sample Output
+## **b) Filter Packets**
 
-**Client:**
-
-```
-Enter message: hello world
-From Server: HELLO WORLD
-```
-
-**Server:**
+### **TCP**
 
 ```
-Server waiting for connection...
-Client connected!
-Received: hello world
+tcp
+```
+
+### **UDP**
+
+```
+udp
+```
+
+### **HTTP**
+
+```
+http
+```
+
+### **DNS**
+
+```
+dns
+```
+
+### **ARP**
+
+```
+arp
+```
+
+### **ICMP**
+
+```
+icmp
 ```
 
 ---
 
+## **c) Capture Telnet Packets**
 
+### **All Telnet packets**
 
+```
+tcp.port == 23
+```
 
+### **Telnet to a specific host**
 
+```
+tcp.port == 23 && ip.addr == <host_ip>
+```
+
+### **Telnet packets going TO host**
+
+```
+tcp.port == 23 && ip.dst == <host_ip>
+```
+
+### **Telnet packets FROM host**
+
+```
+tcp.port == 23 && ip.src == <host_ip>
+```
+
+---
 
