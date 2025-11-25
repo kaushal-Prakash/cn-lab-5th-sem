@@ -321,77 +321,58 @@ int main() {
 
 ### **📌 server.c**
 
-```c
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
-#include <unistd.h>
-#include <arpa/inet.h>
+```python
+import socket
 
-int main() {
-    int sockfd, newsock;
-    char buffer[100];
-    struct sockaddr_in server, client;
-    socklen_t clen = sizeof(client);
+# Create TCP socket
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+# Bind IP and port
+server_socket.bind(("0.0.0.0", 8080))
 
-    server.sin_family = AF_INET;
-    server.sin_port = htons(8080);
-    server.sin_addr.s_addr = INADDR_ANY;
+# Listen for connections
+server_socket.listen(1)
+print("Server is listening on port 8080...")
 
-    bind(sockfd, (struct sockaddr*)&server, sizeof(server));
-    listen(sockfd, 5);
+# Accept client
+conn, addr = server_socket.accept()
+print("Connected with:", addr)
 
-    printf("Server waiting for connection...\n");
+# Receive data
+data = conn.recv(1024).decode()
+print("Received:", data)
 
-    newsock = accept(sockfd, (struct sockaddr*)&client, &clen);
+# Convert to UPPERCASE
+data = data.upper()
 
-    recv(newsock, buffer, sizeof(buffer), 0);
+# Send back
+conn.send(data.encode())
 
-    for (int i = 0; buffer[i]; i++)
-        buffer[i] = toupper(buffer[i]);
-
-    send(newsock, buffer, strlen(buffer) + 1, 0);
-
-    close(newsock);
-    close(sockfd);
-    return 0;
-}
+conn.close()
+server_socket.close()
 ```
 
 ### **📌 client.c**
 
-```c
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <arpa/inet.h>
+```python
+import socket
 
-int main() {
-    int sockfd;
-    char buffer[100];
-    struct sockaddr_in server;
+# Create TCP socket
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+# Connect to server (localhost)
+client_socket.connect(("127.0.0.1", 8080))
 
-    server.sin_family = AF_INET;
-    server.sin_port = htons(8080);
-    server.sin_addr.s_addr = inet_addr("127.0.0.1");
+# Send message
+msg = input("Enter message: ")
+client_socket.send(msg.encode())
 
-    connect(sockfd, (struct sockaddr*)&server, sizeof(server));
+# Receive uppercase response
+data = client_socket.recv(1024).decode()
+print("From Server:", data)
 
-    printf("Enter message: ");
-    fgets(buffer, sizeof(buffer), stdin);
+client_socket.close()
 
-    send(sockfd, buffer, strlen(buffer) + 1, 0);
-    recv(sockfd, buffer, sizeof(buffer), 0);
-
-    printf("From Server: %s\n", buffer);
-
-    close(sockfd);
-    return 0;
-}
 ```
 
 ---
