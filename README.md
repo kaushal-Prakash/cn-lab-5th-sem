@@ -360,55 +360,104 @@ int main() {
 ### **📌 server.py**
 
 ```python
-import socket
+import socket     # Imports Python's built-in socket module for networking
 
-# Create TCP socket
+
+# ------------------- CREATE TCP SOCKET -------------------
+# socket.socket(address_family, socket_type)
+# address_family = socket.AF_INET → Using IPv4
+# socket_type = socket.SOCK_STREAM → Using TCP (connection-oriented)
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Bind IP and port
+
+# ------------------- BIND SERVER TO IP + PORT -------------------
+# bind((IP, PORT))
+# "0.0.0.0" → Listen on ALL network interfaces of this machine
+# 8080 → Port number where the server will accept connections
 server_socket.bind(("0.0.0.0", 8080))
 
-# Listen for connections
+
+# ------------------- START LISTENING FOR CLIENTS -------------------
+# listen(backlog)
+# backlog = 1 → Number of queued connections allowed
 server_socket.listen(1)
 print("Server is listening on port 8080...")
 
-# Accept client
+
+# ------------------- ACCEPT CONNECTION FROM CLIENT -------------------
+# accept() → Blocks (waits) until a client connects
+# Returns:
+# conn → New socket used to communicate with that specific client
+# addr → Client address (IP, port)
 conn, addr = server_socket.accept()
 print("Connected with:", addr)
 
-# Receive data
+
+# ------------------- RECEIVE DATA FROM CLIENT -------------------
+# recv(buffer_size)
+# buffer_size = 1024 → Max number of bytes to receive at once
+# decode() → Converts received bytes into a string
 data = conn.recv(1024).decode()
 print("Received:", data)
 
-# Convert to UPPERCASE
+
+# ------------------- PROCESS THE DATA -------------------
+# Convert string to uppercase
 data = data.upper()
 
-# Send back
+
+# ------------------- SEND DATA BACK TO CLIENT -------------------
+# encode() → Convert string back to bytes
 conn.send(data.encode())
 
+
+# ------------------- CLOSE CONNECTIONS -------------------
+# Close client connection
 conn.close()
+
+# Stop the server socket
 server_socket.close()
 ```
 
 ### **📌 client.py**
 
 ```python
-import socket
+import socket      # Imports Python's networking module
 
-# Create TCP socket
+
+# ------------------- CREATE TCP CLIENT SOCKET -------------------
+# socket.socket(address_family, socket_type)
+# AF_INET → IPv4 address family
+# SOCK_STREAM → TCP (reliable connection-oriented protocol)
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Connect to server (localhost)
+
+# ------------------- CONNECT TO SERVER -------------------
+# connect((SERVER_IP, PORT))
+# "127.0.0.1" → localhost (same computer)
+# 8080 → Port the server is listening on
 client_socket.connect(("127.0.0.1", 8080))
 
-# Send message
+
+# ------------------- SEND DATA TO SERVER -------------------
+# input() → Take message from user
 msg = input("Enter message: ")
+
+# encode() → Convert string to bytes (socket only sends bytes)
 client_socket.send(msg.encode())
 
-# Receive uppercase response
+
+# ------------------- RECEIVE RESPONSE FROM SERVER -------------------
+# recv(buffer_size)
+# buffer_size = 1024 → Max amount of data to read at once
+# decode() → Convert bytes back to string
 data = client_socket.recv(1024).decode()
+
 print("From Server:", data)
 
+
+# ------------------- CLOSE CONNECTION -------------------
+# Always close the socket after finishing communication
 client_socket.close()
 
 ```
