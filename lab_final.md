@@ -255,7 +255,7 @@ int main() {
 ---
 
 # **3. C Program for CRC Generation & Error Detection**
-
+crc detects odd errors, single bit errors, burst errors
 ```c
 #include <stdio.h>
 #include <string.h>
