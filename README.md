@@ -258,96 +258,61 @@ int main() {
 crc detects odd errors, single bit errors, burst errors
 ```c
 #include <stdio.h>
-#include <string.h>
+#include<stdlib.h>
+#include<string.h>
 
-// XOR operation between two binary strings
-void XOR(char *a, char *b) { //a -> data segment, b -> polynomial
-    for (int i = 0; i < strlen(b); i++) {
-        a[i] = (a[i] == b[i]) ? '0' : '1';
-    }
+void xor(char a[],char b[]){
+    for(int i=0;i<strlen(b);i++) a[i] = (a[i] == b[i]) ? '0' : '1';
 }
-
-// Perform CRC division
-void crc(char data[], char generator[], char remainder[]) {
-    char temp[200]; //temp to store data for operation to not destroy original one
-    strcpy(temp, data);
-
-    int data_len = strlen(data);
-    int gen_len = strlen(generator);
-
-    // Perform division
-    for (int i = 0; i <= data_len - gen_len; i++) {
-        // Divide only when leading bit is 1
-        if (temp[i] == '1') {
-            char segment[200];
-            strncpy(segment, temp + i, gen_len);
-            segment[gen_len] = '\0';
-
-            XOR(segment, generator);
-            
-            // Put the XOR result back to the temp array
-            for (int j = 0; j < gen_len; j++) {
-                temp[i + j] = segment[j];
-            }
+void crc(char data[],char poly[],char rem[]){
+    char temp[200];
+    strcpy(temp,data);
+    int n = strlen(data);
+    int m = strlen(poly);
+    for(int i=0;i<=n-m;i++){
+        if(temp[i] == '1'){
+            char seg[200];
+            strncpy(seg,temp+i,m);
+            seg[m] = '\0';
+            xor(seg,poly);
+            for(int j=0;j<m;j++) temp[i+j] = seg[j];
         }
     }
-
-    // Remainder = last gen_len-1 bits
-    strcpy(remainder, temp + data_len - (gen_len - 1));
+    
+    strcpy(rem,temp+n-(m-1));
 }
-
-// Build transmitted codeword: original data + remainder
-void build_transmitted(char data[], char remainder[], char transmitted[]) {
-    strcpy(transmitted, data);
-    strcat(transmitted, remainder);
-}
-
 int main() {
-    char data[200], generator[200], received[200];
-
-    printf("Enter original data (sender): ");
-    scanf("%s", data);
-
-    printf("Enter generator polynomial (e.g., 1101): ");
-    scanf("%s", generator);
-
-    // Step 1: Append n-1 zeros
-    int gen_len = strlen(generator);
-    char data_appended[200];
-    strcpy(data_appended, data);
-    for (int i = 0; i < gen_len - 1; i++) strcat(data_appended, "0");
-
-    // Step 2: Calculate remainder
-    char remainder[200];
-    crc(data_appended, generator, remainder);
-
-    // Step 3: Produce codeword (sent data)
-    char transmitted[200];
-    build_transmitted(data, remainder, transmitted);
-
-    printf("\nTransmitted Codeword: %s\n", transmitted);
-
-    // Step 4: Receiver input
-    printf("Enter received data: ");
-    scanf("%s", received);
-
-    // Receiver performs CRC again
-    char dummy[200];
-    crc(received, generator, dummy);
-
-    // If remainder all zeros → data OK
+    char data[200], received[200], poly[200];
+    scanf("%s",data);
+    scanf("%s",poly);
+    
+    char data_app[200];
+    strcpy(data_app,data);
+    for(int i=0;i<strlen(poly)-1;i++) strcat(data_app,"0");
+    
+    char rem[200];
+    crc(data_app,poly,rem);
+    printf("Sended : %s\n",strcat(data,rem));
+    
+    char rrem[200];
+    scanf("%s",received);
+    crc(received,poly,rrem);
+    
     int error = 0;
-    for (int i = 0; i < strlen(generator) - 1; i++) {
-        if (dummy[i] != '0') {
+    for(int i=0;i<strlen(rrem);i++){
+        if(rrem[i] != '0'){
             error = 1;
             break;
         }
     }
-
-    if (error)
-        printf("Result: Data is CORRUPTED!\n");
-    else
-        printf("Result: Data is HEALTHY!\n");
+    
+    if(error){
+        printf("data is corrupted");
+    }else{
+        printf("data is healthy");
+    }
+    
+    printf("Try programiz.pro");
 
     return 0;
 }
